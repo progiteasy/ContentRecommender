@@ -1,0 +1,47 @@
+﻿@model RegistrationViewModel
+@{
+    ViewData["Title"] = "Registration";
+}
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card border-0 shadow rounded">
+                <div class="card-header bg-dark text-center text-white">
+                    <h3>Registration in the system</h3>
+                </div>
+                <div class="card-body justify-content-center">
+                    @using (Html.BeginForm("register", "account", FormMethod.Post, new { id = "registration-form" }))
+                    {
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" id="form-validation-errors-area">
+                                @ViewData.ModelState.Values.SelectMany(value => value.Errors).First().ErrorMessage
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+                        <div class="form-group">
+                            @Html.TextBoxFor(registrationModel => registrationModel.UserName, new { @class = "form-control input-lg mb-2", @placeholder = "Enter your username" })
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(registrationModel => registrationModel.Email, new { @class = "form-control input-lg mb-2", @placeholder = "Enter your e-mail address" })
+                        </div>
+                        <div class="form-group">
+                            @Html.PasswordFor(registrationModel => registrationModel.Password, new { @class = "form-control input-lg mb-2", @placeholder = "Enter your password" })
+                        </div>
+                        <div class="form-group">
+                            @Html.PasswordFor(registrationModel => registrationModel.ConfirmedPassword, new { @class = "form-control input-lg mb-3", @placeholder = "Confirm your password" })
+                        </div>
+                        <div class="text-center">
+                            <input id="register-button" class="btn btn-lg btn-dark btn-block text-white" type="submit" value="Register">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

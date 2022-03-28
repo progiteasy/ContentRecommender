@@ -1,0 +1,18 @@
+﻿@model SearchViewModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<form method="post" asp-action="search">
+    <input asp-for="Query" />
+    <input type="submit" />
+</form>
+
+
+
+@for (var i = 0; i < Model.ReviewModels.Count; i++)
+{
+    <div>@Model.ReviewModels[i].Id</div>
+    <div>@Model.ReviewModels[i].Title</div>
+}

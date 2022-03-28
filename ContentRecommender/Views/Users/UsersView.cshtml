@@ -1,0 +1,68 @@
+﻿@model IList<UserViewModel>
+@{
+    ViewData["Title"] = "Users";
+}
+<div class="container mt-5 pb-5">
+    <div class="text-center text-white mb-4">
+        <h3>List of users</h3>
+    </div>
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        <div class="btn-group-sm mb-2" role="group">
+            <input class="btn btn-sm btn-dark btn-block text-white" type="submit" value="Block" asp-action="block">
+            <input class="btn btn-sm btn-dark btn-block text-white" type="submit" value="Unblock" asp-action="unblock">
+            <input class="btn btn-sm btn-dark btn-block text-white" type="submit" value="Delete" asp-action="delete">
+            <input class="btn btn-sm btn-dark btn-block text-white" type="submit" value="Assign as admins" asp-action="assign-as-admins">
+            <input class="btn btn-sm btn-dark btn-block text-white" type="submit" value="Assign as users" asp-action="assign-as-users">
+        </div>
+        <div class="table-responsive">
+            <table class="table table-light shadow text-center mb-0 display" id="users-table">
+                <thead class="table-dark">
+                    <tr>
+                        <th><input type="checkbox" id="select-or-diselect-all-users-checkbox" /></th>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>E-mail address</th>
+                        <th>Registration date</th>
+                        <th>Status</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.CheckBoxFor(userModel => Model[i].IsSelected)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(userModel => Model[i].Id)
+                                @Html.HiddenFor(userModel => Model[i].Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(userModel => Model[i].UserName)
+                                @Html.HiddenFor(userModel => Model[i].UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(userModel => Model[i].Email)
+                                @Html.HiddenFor(userModel => Model[i].Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(userModel => Model[i].RegistrationDate)
+                                @Html.HiddenFor(userModel => Model[i].RegistrationDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(userModel => Model[i].Status)
+                                @Html.HiddenFor(userModel => Model[i].Status)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(userModel => Model[i].Role)
+                                @Html.HiddenFor(userModel => Model[i].Role)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

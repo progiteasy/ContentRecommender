@@ -1,0 +1,43 @@
+﻿@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
+}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card border-0 shadow rounded">
+                <div class="card-header bg-dark text-center text-white">
+                    <h3>Login to the system</h3>
+                </div>
+                <div class="card-body justify-content-center">
+                    @using (Html.BeginForm("login", "account", FormMethod.Post, new { id = "login-form" }))
+                    {
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" id="form-validation-errors-area">
+                                @ViewData.ModelState.Values.SelectMany(value => value.Errors).First().ErrorMessage
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+                        <div class="form-group">
+                            @Html.TextBoxFor(loginModel => loginModel.Email, new { @class = "form-control input-lg mb-2", @placeholder = "Enter your e-mail address" })
+                        </div>
+                        <div class="form-group">
+                            @Html.PasswordFor(loginModel => loginModel.Password, new { @class = "form-control input-lg mb-3", @placeholder = "Enter your password" })
+                        </div>
+                        <div class="text-center">
+                            <input id="login-button" class="btn btn-sm btn-dark btn-block text-white" type="submit" value="Log in">
+                            <input id="login-button" class="btn btn-sm btn-dark btn-block text-white" type="submit" value="Log in with Facebook">
+                            <input id="login-button" class="btn btn-sm btn-dark btn-block text-white" type="submit" value="Log in with Google">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

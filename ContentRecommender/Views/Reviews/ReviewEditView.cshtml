@@ -1,0 +1,49 @@
+﻿@model ReviewEditViewModel
+@{
+    ViewData["Title"] = "Review creation";
+}
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.min.js"></script>
+
+    <script src="https://raw.githubusercontent.com/dragonofmercy/Tokenize2/master/dist/tokenize2.min.js"></script>
+
+    <script>
+        UPLOADCARE_LOCALE = "ru"
+    </script>
+}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow rounded">
+                <div class="card-header bg-dark text-center text-white">
+                    <h3>New review</h3>
+                </div>
+                <div class="card-body justify-content-center">
+                    @using (Html.BeginForm(FormMethod.Post, null, new { id = "login-form" }))
+                    {
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" id="form-validation-errors-area">
+                                @ViewData.ModelState.Values.SelectMany(value => value.Errors).First().ErrorMessage
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        }
+                        @Html.DropDownListFor(reviewCreationModel => reviewCreationModel.ReviewModel.CategoryName, new SelectList(Model.AllCategoryNames), "Select", new { @class = "form-control input-lg mb-2" });
+                        @Html.TextBoxFor(reviewCreationModel => reviewCreationModel.ReviewModel.Title, new { @class = "form-control input-lg mb-2", placeholder = "Title" })
+                        @Html.TextAreaFor(reviewCreationModel => reviewCreationModel.ReviewModel.Text, new { @class = "form-control input-lg", id = "new-message-body-input", placeholder = "Body" })
+                        @Html.TextBoxFor(x => x.ReviewModel.AuthorRating, "", new { type = "number", @class = "form-control input-lg", min = "1", max = "5", value = 1 })
+                        <select id="token" asp-for="ReviewModel.Tags" asp-items='Model.AllTags.Select(x => new SelectListItem() { Text = x, Value = x })'>
+                        </select>
+                        <div class="text-center">
+                            <input id="login-button" class="btn btn-lg btn-dark btn-block text-white" type="submit" value="Save changes">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

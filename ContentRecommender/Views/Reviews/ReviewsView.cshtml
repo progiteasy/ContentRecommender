@@ -1,0 +1,63 @@
+﻿@model IList<ReviewViewModel>
+@{
+    ViewData["Title"] = "My reviews";
+}
+<div class="container mt-5 pb-5">
+    <div class="text-center text-white mb-4">
+        <h3>List of users</h3>
+    </div>
+    <form method="post" asp-action="">
+    </form>
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        <div class="btn-group-sm" role="group">
+            <button class="btn p-0" type="submit" asp-action="delete" asp-controller="reviews" asp-all-route-data='new Dictionary<string, string> { ["userName"] = User.Identity.Name }'>
+                <img src="~/images/delete-user-icon.png" width="48" height="48" title="Delete selected reviews" alt="Delete selected reviews">
+            </button>
+        </div>
+        <div class="btn-group-sm" role="group">
+            <button class="btn p-0" type="submit" asp-action="add" asp-controller="reviews" asp-all-route-data='new Dictionary<string, string> { ["userName"] = User.Identity.Name }'>
+                <img src="~/images/delete-user-icon.png" width="48" height="48" title="Add" alt="Add">
+            </button>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-light shadow text-center mb-0" id="users-table">
+                <thead class="table-dark">
+                    <tr>
+                        <th><input type="checkbox" id="select-or-diselect-all-users-checkbox" /></th>
+                        <th>Creation date</th>
+                        <th>Category</th>
+                        <th>Title</th>
+                        <th>Average rating</th>
+                        <th>Like count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.CheckBoxFor(userModel => Model[i].IsSelected)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(userModel => Model[i].CreationDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(userModel => Model[i].CategoryName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(userModel => Model[i].Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(userModel => Model[i].AverageUserRating)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(userModel => Model[i].LikeCount)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
